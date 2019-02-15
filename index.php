@@ -1,6 +1,9 @@
 <?php
 
-header('Content-Type: application/json');
+header('Content-type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
+
 include './classes/DB.php';
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
