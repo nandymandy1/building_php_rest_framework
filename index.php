@@ -1,14 +1,13 @@
 <?php
 
-header('Content-type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
+header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT');
 
 include './classes/DB.php';
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
 $request = $_SERVER['REQUEST_URI'];
-$host = $_SERVER['HTTP_HOST'];
+
 $tables = ['posts'];
 
 $url = rtrim($request, '/');
@@ -22,5 +21,8 @@ if ($url[4] != null) {
 } else {
     $id = null;
 }
-
-include './api/posts.php';
+if (in_array($tableName, $tables)) {
+    include "./api/$tableName.php";
+} else {
+    echo json_encode(['message' => 'Bad method call.', 'status' => 404]);
+}
