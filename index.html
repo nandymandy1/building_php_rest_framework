@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
+</html>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                data: ''
+            }
+        },
+        methods: {
+            getData() {
+                axios.get(`./api/posts/3`).then(res => {
+                    console.log(res);
+                })
+            },
+            postData() {
+
+                let fd = new FormData();
+                fd.append('title', 'Post 3');
+                fd.append('content', 'This is the body for the Post Three.');
+                fd.append('author', 'Codebook');
+                /*
+                let newPost = {
+                    title: "Test Post",
+                    content: "This is content for test Post",
+                    author: "Codebook Inc"
+                }
+                */
+                axios.post(`./api/posts`, fd).then(res => {
+                    console.log(res);
+                })
+            },
+            putData() {
+
+                let fd = {
+                    title: "Post 4 Updated",
+                    content: "Content for POST 3 Updated",
+                    author: "Codebook Inc"
+                };
+                let hd = {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                axios.put(`./api/posts/4`, fd, hd).then(res => {
+                    console.log(res);
+                })
+            },
+            deleteData() {
+                axios.delete(`./api/posts/4`).then(res => {
+                    console.log(res);
+                })
+            }
+        },
+        created() {
+            this.deleteData()
+        }
+    });
+</script>
